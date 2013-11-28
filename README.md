@@ -1,2 +1,1 @@
-algorithmPractise
-=================
+My pratise for interview questions
