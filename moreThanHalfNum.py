@@ -1,3 +1,4 @@
+#http://www.careercup.com/question?id=16204677
 #! /usr/bin/env python
 
 def find (array):
