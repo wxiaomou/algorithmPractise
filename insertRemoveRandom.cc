@@ -7,50 +7,38 @@ using namespace std;
 
 class Solution {
 	private:
-		list<int> lst;
-		list<int>::iterator head;
-		list<int>::iterator end;
-		vector<list<int>::iterator> vec;
-		unordered_map<int, pair< vector<list<int>::iterator>::iterator, int> > _map;
+		vector<int> vec;
+		unordered_map<int, int> _map;
 	public:
 		void insert(int n) {
 			if (_map.count(n) > 0) {
-				*(_map[n].first) = lst.insert( (*(_map[n].first)), n);
-				cout << *(*(_map[n].first)) << " "<< n << endl;
-				cout << *(*(_map[n].first) ++) << endl;
-				_map[n].second++;
+				_map[n]++;
 			} else {
-				lst.push_back(n);
-				end = lst.end();
-				vec.push_back(--end);
-				vector<list<int>::iterator>::iterator it = vec.end();
-				_map[n] = make_pair(--it, 1);
+				_map[n] = 1;
+				vec.push_back(n);
 			}
-			head = lst.begin();
-			end = lst.end();
 		}
 
 		void remove(int n) {
 			if (_map.count(n) == 0) return;
-			auto it = *(*_map[n].first);
-			lst.remove(it);
-			_map[n].second--;
-			if (_map[n].second == 0) {
-				vec.erase(_map[n].first);
+			_map[n]--;
+			if (_map[n] == 0) {
 				_map.erase(n);
+				auto it = vec.begin();
+				for (; *it != n; it++);
+				vec.erase(it);
 			}
-			head = lst.begin();
-			end = lst.end();
 		}
 
 		int getRandom() {
 			int index = rand() % vec.size();
-			return (*(vec[index]));
+			return vec[index];
 		}
 
 		void print() {
-			for (auto it = head; it != end; it++) {
-					cout << *it << " ";
+			for (auto it = _map.begin(); it != _map.end(); it++) {
+					for (int i = 0; i < it->second; i++)
+						cout << it->first << " ";
 			}
 			cout << endl;
 		}
