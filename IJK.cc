@@ -23,6 +23,11 @@ class Solution {
 					}
 				}
 		}
+		/*
+		 * 
+		 * O(1) space solution, key, find i, j first, if possible update j so let A[j] still larger then A[i] but small the older A[j] so that easy to find A[k];
+		 * if find a pair A[i'] < A[j'] which A[i'] < A[i] and A[j'] < A[j] then update the pair in order to easy find A[k]; 
+		 */
 		void find2(int A[], int n) {
 			if (n < 3) return;
 			int i = -1, j = -1, k = -1, tmp = -1;
