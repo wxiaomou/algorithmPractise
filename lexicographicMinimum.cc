@@ -10,7 +10,7 @@ class Solution {
 			int n = str.length();
 			str += str;
 			int begin = 0, offset = 0;
-			for (int i = 0; i < 2 * n; i++) {
+			for (int i = 1; i < 2 * n; i++) {
 				if (str[i] < str[begin]) {
 					begin = i;
 					offset = 0;
@@ -18,6 +18,7 @@ class Solution {
 					offset++;
 				} else if (str[i] < str[begin + offset]) {
 					begin = i - offset;
+					offset = 0;
 					if (str[i] == str[begin])
 						offset = 1;
 				} else {
@@ -31,5 +32,6 @@ class Solution {
 int main() {
 	Solution sol;
 	string str = "BCABDADAB";
+	str = "BCDEBCDBCC";
 	cout << sol.rotate(str) << endl;
 }
