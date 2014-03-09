@@ -20,6 +20,7 @@ public:
 			if (!this->root) this->root = root;
 			return root;
 		}
+		if (root->val == val) return root;
 		if (root->val > val) {
 			root->left_count++;
 			root->left = _insert(val, root->left);
@@ -89,6 +90,37 @@ public:
 			}
 		}
 	}		
+	
+	int get_Random() {
+		return Random(root);
+	}
+	int Random(Node *root) {
+		if (!root->left && !root->right) return root->val;
+		int total = 0, index = 0;
+		if (!root->left) {
+			total = root->right_count + 1;
+			index = rand() & total;
+			if (index == 1) return root->val;
+			return Random(root->right);
+		}
+
+		if (!root->right) {
+			total = root->left_count + 1;
+			index = rand() % total;
+			if (index <= root->left_count)
+				return Random(root->left);
+			return root->val;
+		}
+
+		total = root->left_count + 1 + root->right_count;
+	  index = rand() % total;
+		if (index <= root->left_count)
+			return Random(root->left);
+		else if (index == root->left_count + 1)
+			return root->val;
+		else 
+			return Random(root->right);
+	}
 
 };
 
@@ -98,11 +130,17 @@ int main() {
 	for (int i = 0; i < 100; i += 3) {
 		sol.insert(i);
 	}
+	for (int i = 2; i < 100; i += 2) {
+		sol.insert(i);
+	}
 //	sol.travers();
 
 	cout << "search in range 30--65 "  << endl;
 	sol.search_range(30, 65);
 	cout << endl;
 //	cout << "search in range 30--65 " << sol.search_range_cnt(30, 65) << endl;
+  cout << sol.get_Random() << endl;
+  cout << sol.get_Random() << endl;
+  cout << sol.get_Random() << endl;
 		
 }
