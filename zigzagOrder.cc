@@ -1,6 +1,7 @@
 //http://www.careercup.com/question?id=5724823657381888
 #include<iostream>
 #include<vector>
+#include<algorithm>
 
 using namespace std;
 
@@ -22,6 +23,16 @@ public:
 		}
 		return;
 	}
+
+	void reorder2(vector<int> &input) {
+		int n = input.size();
+		if (n < 2) return;
+		sort(input.begin(), input.end());
+		for (int i = 2; i < n; i += 2) {
+			swap(input[i], input[i - 1]);
+		}
+		return;
+	}
 	
 	void swap(int &a, int &b) {
 		int tmp = a;
@@ -39,7 +50,7 @@ int main() {
 		input.push_back(tmp);
 	}
 	Solution sol;
-	sol.reorder(input);
+	sol.reorder2(input);
 	for (auto it = input.begin(); it != input.end(); it++) cout << *it << " ";
 	cout << endl;
 }
