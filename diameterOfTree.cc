@@ -4,6 +4,7 @@
 #include<vector>
 #include"BST_Node.h"
 #include<unordered_set>
+#include<unordered_map>
 
 
 using namespace std;
@@ -11,6 +12,39 @@ using namespace std;
 class diameter {
 	
 public:
+	int max_diameter2(vector<Node *> nodes) {
+		int n = nodes.size();
+		if (!n) return 0;
+		unordered_map<Node *, vector<Node *>> hash;
+		Node *root = NULL;
+		for (auto it = nodes.begin(); it != nodes.end(); it++) {
+			if (!(*it)->parent) root = (*it);
+			else {
+				if (hash.count((*it)->parent) == 0) {
+					vector<Node *> tmp(1, (*it));
+					hash[(*it)->parent] = tmp;
+				} else {
+					hash[(*it)->parent].push_back((*it));
+				}
+			}
+		}
+		int h = 0;
+		return recur(root, h, hash);
+	}
+
+
+	int recur(Node *root, int &h, unordered_map<Node *, vector<Node *>> &hash) {
+		if (hash.count(root) == 0) {
+			h = 1;
+			return 1;
+		}
+		int lh = 0, rh = 0;
+		int left = recur(hash[root][0], lh, hash);
+		int right = hash[root].size() > 1 ? recur(hash[root][1], rh, hash) : 0;
+		h = max(lh, rh) + 1;
+		return max(left, max(right, lh + rh + 1));
+	}
+
 	int max_diameter(vector<Node *> nodes) {
 		int n = nodes.size();
 		if (!n) return 0;
@@ -27,7 +61,7 @@ public:
 			int h = 0;
 			while (tmp) {
 				h++;
-				if (!updateDiameter && tmp->maxHeight > 0) {
+				if (!updateDiameter && tmp->maxHeight > 0) { // tmp->maxHeight > 0 means this node has been visited and now we can get the daimeter. 
 					d = max(d, tmp->maxHeight + h);
 					updateDiameter = true;
 				}
@@ -104,5 +138,5 @@ int main() {
 	nodes.push_back(R);
 	nodes.push_back(S);
 
-	cout << sol.max_diameter(nodes) << endl;
+	cout << sol.max_diameter2(nodes) << endl;
 }
