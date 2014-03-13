@@ -24,11 +24,11 @@ class EmoticonsDiv2 {
 			
 			
 			if (smiles % cur == 0)
-				ans = min(ans, 1 + get_smiles(smiles - cur, cur, dp));
+				ans = min(ans, 1 + get_smiles(smiles - cur, cur, dp));// single paste cur.
 			
 			int have = total - smiles + cur;
 		
-			ans = min(ans, 2 + get_smiles(total - have, have, dp));
+			ans = min(ans, 2 + get_smiles(total - have, have, dp));// copy all exiting and paste.
 	
 			dp[smiles][cur] = ans;
 			return ans;
