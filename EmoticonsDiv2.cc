@@ -1,4 +1,4 @@
-#include <algorithm>
+/*#include <algorithm>
 #include <vector>
 using namespace std;
 
@@ -34,5 +34,39 @@ class EmoticonsDiv2 {
 			return ans;
 			
 		}
+	
+};*/
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+#define MX 10000
+class EmoticonsDiv2 {
+	public:
+	int printSmiles(int smiles) {
+		if (smiles < 2) return 0;
+		vector<int> tmp(smiles + 1, MX);
+		vector<vector<int>> ref(smiles + 1, tmp);
+		dp(smiles, smiles - 1, 1, ref);
+		return ref[smiles - 1][1] + 1;
+	}
+	
+	int dp(int &total, int smiles, int cur, vector<vector<int>> &ref) {
+		if (smiles == 0) return 0;
+		if (smiles < 0) return MX;
+		if (ref[smiles][cur] < MX) return ref[smiles][cur];
+		int tmp = cur, n = 1;
+		if (smiles % cur == 0) {
+			while (tmp <= smiles) {
+				ref[smiles][cur] = min(ref[smiles][cur], dp(total, smiles - tmp, cur, ref) + n); //ctr + v;
+				tmp += cur;
+				n++;
+			}
+		}
+		int have = total - smiles;
+		if(have <= smiles / 2)
+			ref[smiles][cur] = min(ref[smiles][cur], dp(total, smiles - have, have, ref) + 2); // ctr + c & ctr + v;
+		return ref[smiles][cur];
+	}
 	
 };
