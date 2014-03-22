@@ -66,8 +66,8 @@ public:
 
 
 int main() {
-	vector<int> A{2, 4, 1, 3};
-	vector<int> B{1, 2, 0, 4};
+	vector<int> B{1, 6, 7, 3, 2};//2, 4, 1, 3};
+	vector<int> A{6, 7, 8, 9, 1};//1, 2, 0, 4};
 	// std::vector<int> _A;
 	Permutation p;
 	vector<int> C = p.closest_nums(A, B);
